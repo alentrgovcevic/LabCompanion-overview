@@ -2,7 +2,7 @@
 
 **The lab bench in your pocket.** An iOS app for wet-lab scientists — calculators, protocol timers, and reference cards in one fast, offline-first, privacy-respecting app.
 
-![status](https://img.shields.io/badge/status-App%20Store%20launch%20prep-orange)
+![status](https://img.shields.io/badge/status-live%20on%20App%20Store-success)
 ![platform](https://img.shields.io/badge/platform-iOS%2017%2B%20%C2%B7%20SwiftUI-blue)
 ![data](https://img.shields.io/badge/data-SwiftData%20%C2%B7%20CloudKit-informational)
 
@@ -24,14 +24,13 @@ flowchart TD
   UI --> DATA["SwiftData store"]
   DATA -->|sync| CK[("CloudKit")]
   UI --> SK["StoreKit 2 · one-time premium + 7-day trial"]
-  UI --> ADS["AdMob + UMP consent + ATT (free tier)"]
 ```
 
 ## Engineering highlights
 - **Live Activities** via ActivityKit — the running protocol counts down on the Lock Screen using `Text(timerInterval:)`, so updates are pushed only on step changes (battery-friendly).
 - **Suspended-safe notifications** — all remaining step alerts are scheduled upfront with cumulative fire dates, so the phone buzzes at every step boundary even while backgrounded.
 - **Resilient persistence** — SwiftData with a CloudKit → local → in-memory fallback ladder so a store failure never silently drops user data.
-- **StoreKit 2** one-time non-consumable with a Keychain-backed install-date trial; **UMP** consent + **App Tracking Transparency** sequenced after onboarding; AdMob with Meta Audience Network fallback.
+- **StoreKit 2** one-time non-consumable with a Keychain-backed install-date trial. No ads and no tracking SDKs.
 - Accessibility-first: 44pt targets, VoiceOver labels, dark-mode colour hierarchy.
 
 ## Tech stack
@@ -39,10 +38,14 @@ flowchart TD
 |---|---|
 | App | SwiftUI, SwiftData, ActivityKit, WidgetKit (iOS 17+) |
 | Sync | CloudKit |
-| Monetization | StoreKit 2, AdMob, UMP, Meta Audience Network |
+| Monetization | StoreKit 2 (no ads) |
 
 ## Screenshots
-_Add app screenshots to `docs/screenshots/`._
+<p>
+  <img src="docs/screenshots/1-welcome.jpg" width="200" alt="Onboarding">
+  <img src="docs/screenshots/2-live-activity.jpg" width="200" alt="Protocol timer and Lock Screen Live Activity">
+  <img src="docs/screenshots/3-calculators.jpg" width="200" alt="Calculators and reference cards">
+</p>
 
 ---
 © 2026 Alen Trgovcevic · AT Productions (CVR 46159640). Source code is private; this repository is a public architecture overview.
