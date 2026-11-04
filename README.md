@@ -1,9 +1,12 @@
 # LabCompanion 🧪
 
-**The lab bench in your pocket.** An iOS app for wet-lab scientists — calculators, protocol timers, and reference cards in one fast, offline-first, privacy-respecting app.
+**The lab bench in your pocket.** An iOS and Android app for wet-lab scientists — calculators, protocol timers, and reference cards in one fast, offline-first, privacy-respecting app.
 
-![status](https://img.shields.io/badge/status-live%20on%20App%20Store-success)
-![platform](https://img.shields.io/badge/platform-iOS%2017%2B%20%C2%B7%20SwiftUI-blue)
+[App Store](https://apps.apple.com/dk/app/labcompanion-lab-calculator/id6770509131) · [Google Play](https://play.google.com/store/apps/details?id=dk.ATproductions.labcompanion)
+
+![status](https://img.shields.io/badge/status-live%20on%20App%20Store%20%26%20Google%20Play-success)
+![platform](https://img.shields.io/badge/platform-iOS%2018%2B%20%C2%B7%20SwiftUI-blue)
+![platform](https://img.shields.io/badge/platform-Android%208%2B%20%C2%B7%20Compose-green)
 ![data](https://img.shields.io/badge/data-SwiftData%20%C2%B7%20CloudKit-informational)
 
 ## What it does
@@ -26,6 +29,21 @@ flowchart TD
   UI --> SK["StoreKit 2 · one-time premium + 7-day trial"]
 ```
 
+The Android app is a native Kotlin port, not a cross-platform build:
+
+```mermaid
+flowchart TD
+  subgraph Android["Android app · Jetpack Compose"]
+    AUI["Compose UI (Material 3)"]
+    AL["TimerAlarmScheduler (exact alarms, re-queued after reboot/update)"]
+    FS["Foreground service · ongoing timer notification"]
+    AUI --> AL
+    AUI --> FS
+  end
+  AUI --> ROOM["Room database · Android Auto Backup"]
+  AUI --> PB["Play Billing · one-time premium + 7-day trial"]
+```
+
 ## Engineering highlights
 - **Live Activities** via ActivityKit — the running protocol counts down on the Lock Screen using `Text(timerInterval:)`, so updates are pushed only on step changes (battery-friendly).
 - **Suspended-safe notifications** — all remaining step alerts are scheduled upfront with cumulative fire dates, so the phone buzzes at every step boundary even while backgrounded.
@@ -36,9 +54,10 @@ flowchart TD
 ## Tech stack
 | Area | Technologies |
 |---|---|
-| App | SwiftUI, SwiftData, ActivityKit, WidgetKit (iOS 17+) |
-| Sync | CloudKit |
-| Monetization | StoreKit 2 (no ads) |
+| iOS app | SwiftUI, SwiftData, ActivityKit, WidgetKit (iOS 18+) |
+| Android app | Kotlin, Jetpack Compose, Room, DataStore (Android 8.0+ / API 26) |
+| Sync | CloudKit (iOS) · Android Auto Backup |
+| Monetization | StoreKit 2 · Google Play Billing (no ads) |
 
 ## Screenshots
 <p>
